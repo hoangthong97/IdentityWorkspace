@@ -1,13 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using IdentityWorkspace.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityWorkspace.Infrastructure.Data;
 
-// Sử dụng tính năng Primary Constructor của .NET 8 để inject gọn gàng
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+// Kế thừa từ IdentityDbContext và truyền ApplicationUser vào
+public class AppDbContext(DbContextOptions<AppDbContext> options)
+    : IdentityDbContext<ApplicationUser>(options)
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        // Đây là nơi cấu hình Fluent API cho các bảng sau này (Phase 3)
+        // Tất cả cấu hình mặc định của các bảng Identity sẽ được khởi tạo ở đây
     }
 }

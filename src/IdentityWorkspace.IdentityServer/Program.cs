@@ -21,6 +21,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// KÍCH HOẠT IDENTITY SERVER TẠI ĐÂY (BẮT BUỘC TRƯỚC USEAUTHORIZATION)
+app.UseIdentityServer();
+
+app.UseAuthorization();
+app.MapControllers();
+
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -39,6 +45,22 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+// CHÈN ĐOẠN CODE NÀY ĐỂ KÍCH HOẠT SEED DATA KHI APP CHẠY
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        // Gọi hàm Seed Data đồng bộ
+        await IdentityWorkspace.Infrastructure.Data.DbInitializer.SeedDataAsync(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Có lỗi xảy ra trong quá trình Seed dữ liệu dữ liệu.");
+    }
+}
 
 app.Run();
 
