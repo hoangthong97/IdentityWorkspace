@@ -1,5 +1,7 @@
-﻿using IdentityWorkspace.Domain;
+﻿using IdentityWorkspace.Application.Interfaces;
+using IdentityWorkspace.Domain;
 using IdentityWorkspace.Infrastructure.Data;
+using IdentityWorkspace.Infrastructure.Repositories;
 using IdentityWorkspace.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +62,9 @@ public static class DependencyInjection
             options.Configuration = redisConnectionString;
             options.InstanceName = "IdentityCache_";
         });
+
+        // 5. ĐĂNG KÝ REPOSITORY VÀO DI CONTAINER AT HERE
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
