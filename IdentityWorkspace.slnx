@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/IdentityWorkspace.Application/IdentityWorkspace.Application.csproj" />
+    <Project Path="src/IdentityWorkspace.Domain/IdentityWorkspace.Domain.csproj" />
+    <Project Path="src/IdentityWorkspace.IdentityServer/IdentityWorkspace.IdentityServer.csproj" />
+    <Project Path="src/IdentityWorkspace.Infrastructure/IdentityWorkspace.Infrastructure.csproj" />
+  </Folder>
+</Solution>
